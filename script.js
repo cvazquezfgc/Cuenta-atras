@@ -1,4 +1,4 @@
-// Configuración de la fecha de fin (3 semanas desde ahora)
+// Establece la fecha de fin (3 semanas desde ahora)
 const endDate = new Date();
 endDate.setDate(endDate.getDate() + 21); // 3 semanas
 
@@ -29,7 +29,7 @@ function updateFlip(id, value) {
         element.setAttribute('data-value', String(value).padStart(2, '0'));
         element.textContent = String(value).padStart(2, '0');
         element.classList.add('flip-animation');
-        setTimeout(() => element.classList.remove('flip-animation'), 600);
+        setTimeout(() => element.classList.remove('flip-animation'), 500);
     }
 }
 

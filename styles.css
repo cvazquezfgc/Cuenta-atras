@@ -1,20 +1,78 @@
-body, html, #root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-.App {
-  text-align: center;
+.flip-clock {
+    display: flex;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-.countdown {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Courier New', Courier, monospace;
+.flip {
+    position: relative;
+    width: 60px;
+    height: 80px;
+    margin: 0 5px;
+    background: #222;
+    color: #ffea00;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    perspective: 1000px;
+    overflow: hidden;
+    border: 2px solid #555;
+}
+
+.separator {
+    color: #ffea00;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flip::before,
+.flip::after {
+    content: attr(data-value);
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.5s ease;
+}
+
+.flip::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #333;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transform-origin: bottom;
+    transform: rotateX(0deg);
+}
+
+.flip::after {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #111;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transform-origin: top;
+    transform: rotateX(-180deg);
+}
+
+.flip.flip-animation::before {
+    transform: rotateX(-180deg);
+}
+
+.flip.flip-animation::after {
+    transform: rotateX(0deg);
 }

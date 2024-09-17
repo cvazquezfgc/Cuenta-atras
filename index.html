@@ -1,22 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuenta Atrás</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="flip-clock">
-        <div class="flip" id="days">00</div>
-        <div class="separator">:</div>
-        <div class="flip" id="hours">00</div>
-        <div class="separator">:</div>
-        <div class="flip" id="minutes">00</div>
-        <div class="separator">:</div>
-        <div class="flip" id="seconds">00</div>
+import React, { useState, useEffect } from 'react';
+import SplitFlap from 'react-split-flap-effect';
+import './App.css';
+
+function App() {
+  // Establece la fecha de fin (3 semanas desde ahora)
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  function calculateTimeLeft() {
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 21);
+    const now = new Date();
+    const difference = endDate - now;
+
+    const timeLeft = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+      minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+      seconds: Math.floor((difference % (1000 * 60)) / 1000),
+    };
+
+    return timeLeft;
+  }
+
+  return (
+    <div className="App">
+      <div className="countdown">
+        <SplitFlap
+          characterSet={'0123456789'}
+          text={`${String(timeLeft.days).padStart(2, '0')}:${String(timeLeft.hours).padStart(2, '0')}:${String(timeLeft.minutes).padStart(2, '0')}:${String(timeLeft.seconds).padStart(2, '0')}`}
+          flipDuration={0.5}
+          fontSize={50}
+          backgroundColor="#333"
+          color="#ffea00"
+        />
+      </div>
     </div>
-    <script src="script.js"></script>
-</body>
-</html>
+  );
+}
+
+export default App;
